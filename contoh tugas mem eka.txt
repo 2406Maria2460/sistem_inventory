@@ -1,0 +1,22 @@
+https://github.com/ekayuniar/sistem_inventory/
+
+
+password git up : 2498Tanisya2498
+
+
+$edit_produk = mysqli_query($koneksi, "UPDATE produk SET nama_produk='$nama_produk', 
+                                deskripsi='$deskripsi', 
+                                harga='$harga',
+                                stock='$stock' WHERE id_produk='$id_produk'");
+
+
+
+<select name="id_produk" class="form-control">
+                        <?php
+                        $getproduk = mysqli_query($koneksi, "SELECT * FROM produk");
+
+                        while ($pr = mysqli_fetch_array($getproduk)) {
+                            $id_produk = $pr['id_produk'];
+                            $nama_produk = $pr['nama_produk'];
+                            $deskripsi = $pr['deskripsi'];
+                            $stock = $pr['stock'];
