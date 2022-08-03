@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 07, 2022 at 01:40 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Generation Time: Aug 03, 2022 at 01:45 PM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 7.3.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -31,8 +32,8 @@ CREATE TABLE `detail_pesanan` (
   `id_detailpesanan` int(11) NOT NULL,
   `id_pesanan` int(11) NOT NULL,
   `id_produk` int(11) NOT NULL,
-  `ghl` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `qty` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -43,9 +44,9 @@ CREATE TABLE `detail_pesanan` (
 CREATE TABLE `masuk` (
   `id_masuk` int(11) NOT NULL,
   `id_produk` int(11) NOT NULL,
-  `gty` int(11) NOT NULL,
-  `tgl_masuk` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `qty` int(11) NOT NULL,
+  `tgl_masuk` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -56,9 +57,9 @@ CREATE TABLE `masuk` (
 CREATE TABLE `pelanggan` (
   `id_pelanggan` int(11) NOT NULL,
   `nama_pelanggan` varchar(50) NOT NULL,
-  `no_telp` varchar(20) NOT NULL,
+  `no_tlp` varchar(20) NOT NULL,
   `alamat` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -68,8 +69,9 @@ CREATE TABLE `pelanggan` (
 
 CREATE TABLE `pesanan` (
   `id_pesanan` int(11) NOT NULL,
-  `tgl_pesan` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `tgl_pesanan` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id_pelanggan` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -80,10 +82,10 @@ CREATE TABLE `pesanan` (
 CREATE TABLE `produk` (
   `id_produk` int(11) NOT NULL,
   `nama_produk` varchar(50) NOT NULL,
-  `deskripsi` int(100) NOT NULL,
+  `deskripsi` varchar(100) NOT NULL,
   `harga` int(11) NOT NULL,
-  `stok` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `stock` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -94,15 +96,8 @@ CREATE TABLE `produk` (
 CREATE TABLE `user` (
   `id_user` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
-  `password` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`id_user`, `username`, `password`) VALUES
-(1, 'yoga', 'yoga2468');
+  `password` varchar(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables
@@ -149,6 +144,12 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `detail_pesanan`
+--
+ALTER TABLE `detail_pesanan`
+  MODIFY `id_detailpesanan` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `masuk`
 --
 ALTER TABLE `masuk`
@@ -161,10 +162,22 @@ ALTER TABLE `pelanggan`
   MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `pesanan`
+--
+ALTER TABLE `pesanan`
+  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
   MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
