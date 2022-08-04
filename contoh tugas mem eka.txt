@@ -20,3 +20,33 @@ $edit_produk = mysqli_query($koneksi, "UPDATE produk SET nama_produk='$nama_prod
                             $nama_produk = $pr['nama_produk'];
                             $deskripsi = $pr['deskripsi'];
                             $stock = $pr['stock'];
+
+
+$getHistorys = mysqli_query($koneksi, "SELECT * FROM masuk WHERE id_masuk='$id_masuk'");
+    $getStok = mysqli_query($koneksi, "SELECT stock from produk where id_produk = '$id_produk'");
+    $getStok2 = mysqli_fetch_array($getStok);
+
+
+
+
+getHistory = mysqli_fetch_array($getHistorys);
+    $historyLama = $getHistory['quantity'];
+    $stokSekarang = $getStok2['stock'];
+    if ($quantity >= $historyLama) {
+        $selisih = $quantity - $historyLama;
+        $update = mysqli_query($koneksi, "update produk set stock = stock+$selisih where id_produk='$id_produk'");
+    } else {
+        $selisih = $historyLama - $quantity;
+        $update = mysqli_query($koneksi, "update produk set stock = stock-$selisih where id_produk='$id_produk'")
+$query2 = mysqli_query($koneksi, "UPDATE masuk SET quantity='$quantity' WHERE id_masuk='$id_masuk'");
+
+    if ($query2) {
+        //jika sukses
+        header('location:masuk.php');
+    } else {
+        echo '
+        <script>alert("Gagal");
+         window.location.href="masuk.php"
+        </script>
+        ';
+    }
